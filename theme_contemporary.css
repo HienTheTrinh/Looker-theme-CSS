@@ -151,6 +151,11 @@ th.headerCell {
   color: #666666;
 }
 
+/* Zebra striping for odd rows */
+tr:nth-child(odd) .rowCell {
+  background-color: #ededed;
+}
+
 /* Measure header */
 th.headerCell.measure {
   font-size: 8px;
