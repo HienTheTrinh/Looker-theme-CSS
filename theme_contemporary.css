@@ -1,165 +1,97 @@
+/* Scoping to .reportTable to ensure styles apply correctly 
+   within the Looker Custom Viz container.
+*/
+
 @font-face {
   font-family: 'Noto Sans TC';
-  src: url('./fonts/noto-sans-tc-v10-latin_chinese-traditional-regular.woff2') format('woff2')
+  src: url('./fonts/noto-sans-tc-v10-latin_chinese-traditional-regular.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'Noto Sans SC';
-  src: url('./fonts/noto-sans-sc-v11-latin_chinese-simplified-regular.woff2') format('woff2')
+  src: url('./fonts/noto-sans-sc-v11-latin_chinese-simplified-regular.woff2') format('woff2');
 }
 
+/* Tooltip & Utility Classes */
 #tooltip {
-    position: absolute;
-    width: auto;
-    height: auto;
-    padding: 5px;
-    background-color: white;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-    font-family: sans-serif;
-    font-size: 12px;
-    z-index: 2;
-}
-
-.tooltipTable {
-  font-family: Open Sans,Helvetica,Arial,sans-serif;
-  border: 0px;
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-.focus {
-  font-weight: bold;
-}
-
-.hidden {
-    display: none;
-}
-
-.hover {
-  background-color: #ffffbb;
-}
-
-.reportTable {
-  font-family: Open Sans,Helvetica,Arial,Noto Sans TC, Noto Sans SC,sans-serif;
-  border-collapse: separate;
-  border-spacing: 3px;
-  table-layout: fixed;
-}
-
-th.headerCell {
-  border-bottom: 1px solid #000000 !important;
-  font-weight: bold;
+  position: absolute;
+  width: auto;
+  height: auto;
   padding: 5px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  font-family: sans-serif;
   font-size: 12px;
-  color: #333333;
-  text-align: right;
+  z-index: 2;
 }
 
-.headerCell.merged {
-  text-align: center !important;
-  background-color: #ffffff !important;
+.hidden { display: none; }
+.hover { background-color: #ffffbb; }
+
+/* Main Table Styling */
+.reportTable {
+  font-family: 'Tableau Book', 'Open Sans', Helvetica, Arial, sans-serif;
+  border: 1px solid #cccccc;
+  border-collapse: collapse;
+  border-spacing: 0; /* Reset spacing for zebra consistency */
+  width: 100%;
 }
 
-.headerCell.transposed.dimension.merged {
-  background-color: #ffffff !important;
+/* 1. Cell Values (Standard Data Cells) */
+.reportTable td {
+  font-family: 'Tableau Book', 'Open Sans', sans-serif;
+  font-size: 9px;
+  color: #666666;
+  vertical-align: middle;
+  padding: 5px;
+  border: 1px solid #cccccc;
 }
 
-.indexCell.transposed {
+/* 2. Column Headers */
+.reportTable th {
+  font-family: 'Tableau Book', 'Open Sans', sans-serif;
+  font-size: 12px;
   font-weight: bold;
+  color: #333333;
+  text-align: right; /* Aligned right per request */
+  border: 1px solid #cccccc;
+  border-bottom: 2px solid #000000 !important;
+  padding: 5px;
 }
 
-.indexCell.transposed.merged {
-  background-color: #ffffff !important;
+/* 3. Transposed Header (Row-based headers) */
+.reportTable .indexCell.transposed {
+  font-family: 'Tableau Medium', 'Open Sans', sans-serif;
+  font-size: 8px;
+  color: #333333;
+  font-weight: 500; /* Medium weight */
 }
 
-.rowCell {
-  vertical-align: super;
-  padding-left: 5px;
+/* 4. Measure Header styling (specific sub-headers) */
+.reportTable .headerCell {
+  font-family: 'Tableau Book', 'Open Sans', sans-serif;
+  font-size: 8px;
+  color: #666666;
+  font-weight: normal;
 }
 
-.rowCell.merged {
-  background-color: #ffffff !important;
+/* 5. Zebra Theme Styling */
+/* Applies to odd rows, excluding headers and merged (transposed) cells */
+.reportTable tr:nth-child(odd):not(:first-child) td:not(.merged) {
+  background-color: #f5f5f5;
 }
 
-.rowCell.transposed.dimension.merged {
-  background-color: #ffffff !important;
-}
-
-.nonNumeric {
-  text-align: left;
-}
-
-.numeric {
-  text-align: right;
-}
-
-.negative {
-  color: red;
-}
-
-.estimate {
-  color: darkgray !important;
-}
-
-.singleIndex {
-  padding-left: 15px !important;
-}
-
+/* Maintenance of existing logic */
+.negative { color: red; }
+.estimate { color: darkgray !important; }
 .subtotal {
   font-style: italic;
-  font-weight: bold !important;
+  font-weight: bold;
+  background: #d3d3d3;
 }
-
 .total {
-  border-top: 2px solid #000000;
+  border-top: 2px solid #000000 !important;
   font-weight: bold !important;
-}
-
-.total.transposed {
-  border-top: 0px !important;
-}
-
-.dimension.transposed {
-  font-weight: bold;
-  font-size: 8px;
-  color: #333333;
-  font-family: Arial, sans-serif; /* Tableau Medium alternative */
-}
-
-.rectElem.animated {
-  font-family: Open Sans,Helvetica,Arial,sans-serif;
-  padding: 4px;
-}
-
-.headerCell.animated {
-  border-bottom: 4px solid #ffffff;
-  box-shadow: inset 0px -1px 0px 0px #000000 !important;
-  font-weight: bold;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-/* Cell values */
-.rowCell {
-  font-size: 9px;
-  font-family: Arial, sans-serif; /* Tableau Book alternative */
-  color: #666666;
-}
-
-/* Zebra striping for odd rows */
-tr:nth-child(odd) .rowCell {
-  background-color: #ededed;
-}
-
-/* Measure header */
-th.headerCell.measure {
-  font-size: 8px;
-  color: #666666;
-  font-family: Arial, sans-serif; /* Tableau Book alternative */
-  font-weight: normal;
 }
