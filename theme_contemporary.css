@@ -1,4 +1,4 @@
-/* Custom Fonts */
+/* --- Keep Font-Face Definitions --- */
 @font-face {
   font-family: 'Noto Sans TC';
   src: url('./fonts/noto-sans-tc-v10-latin_chinese-traditional-regular.woff2') format('woff2');
@@ -8,11 +8,63 @@
   src: url('./fonts/noto-sans-sc-v11-latin_chinese-simplified-regular.woff2') format('woff2');
 }
 
-/* Tooltip & Base Styles */
+/* --- Global & Container Scoping --- */
+.report-table {
+  border-collapse: collapse;
+  font-family: "Tableau Book", "Segoe UI", Tahoma, sans-serif;
+}
+
+/* 1. Cell values: size 9, color #666666 */
+.report-table td {
+  font-size: 9px;
+  color: #666666;
+  font-family: "Tableau Book", "Segoe UI", Tahoma, sans-serif;
+  vertical-align: super;
+  padding: 5px;
+  border: 1px solid #cccccc;
+}
+
+/* 2. Transposed header: size 8, color #333333, font Tableau Medium, top/bottom border only */
+.report-table .indexCell.transposed {
+  font-size: 8px;
+  color: #333333;
+  font-family: "Tableau Medium", "Segoe UI Bold", sans-serif;
+  font-weight: 500;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: 1px solid #cccccc !important;
+  border-bottom: 1px solid #cccccc !important;
+}
+
+/* 3. Measure header: size 8, color #666666 */
+/* (In Report Table, these are often th or .headerCell within columns) */
+.report-table th.headerCell {
+  font-size: 8px;
+  color: #666666;
+  font-family: "Tableau Book", "Segoe UI", Tahoma, sans-serif;
+  font-weight: normal;
+}
+
+/* 4. Column Header: size 12, bold, #333333, text-align right, bg transparent */
+.report-table th {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333333;
+  text-align: right;
+  background-color: transparent !important;
+  border: 1px solid #cccccc;
+  padding: 5px;
+}
+
+/* 5. Zebra theme background: #f5f5f5 for odd rows */
+/* Excludes header rows and ensures merged cells (white) aren't overridden */
+.report-table tr:nth-child(odd) td:not(.merged) {
+  background-color: #f5f5f5;
+}
+
+/* --- Keep Existing Selectors --- */
 #tooltip {
   position: absolute;
-  width: auto;
-  height: auto;
   padding: 5px;
   background-color: white;
   border-radius: 4px;
@@ -23,80 +75,10 @@
   z-index: 2;
 }
 
-.tooltipTable {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  border: 0px;
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-/* Updated Table Core Styles */
-.reportTable {
-  font-family: 'Open Sans', Helvetica, Arial, Noto Sans SC, Noto Sans TC, sans-serif;
-  border: 1px solid #cccccc;
-  border-collapse: collapse;
-  border-spacing: 0; /* Changed from 3px for cleaner zebra alignment */
-  width: 100%;
-}
-
-/* 1. Cell Values (Data Cells) */
-table.reportTable td {
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Tableau Book substitute */
-  font-size: 9px;
-  color: #666666;
-  vertical-align: middle;
-  padding: 5px;
-  border: 1px solid #cccccc;
-}
-
-/* 2. Header (Column Headers) */
-table.reportTable th {
-  font-size: 12px;
-  font-weight: bold;
-  color: #333333;
-  text-align: right;
-  background-color: transparent; /* Allows container background to show through */
-  border: 1px solid #cccccc;
-  border-bottom: 1px solid #000000 !important;
-  padding: 5px;
-}
-
-/* 3. Transposed Header (Row Headers when transposed) */
-.indexCell.transposed {
-  font-family: "Segoe UI Bold", "Arial Black", sans-serif; /* Tableau Medium substitute */
-  font-size: 8px;
-  color: #333333;
-  font-weight: bold;
-}
-
-/* 4. Measure Header */
-/* Assuming measure labels in Report Table use specific sub-classes */
-.headerCell, .measure-column-header {
-  font-family: "Segoe UI", Roboto, sans-serif; /* Tableau Book substitute */
-  font-size: 8px;
-  color: #666666;
-  font-weight: normal;
-}
-
-/* 5. Zebra Theme Background */
-/* Targets odd rows, excluding the header (thead) and specifically ignoring merged background overrides */
-table.reportTable tbody tr:nth-child(odd):not(.header-row) {
-  background-color: #f5f5f5;
-}
-
-/* Ensure merged cells remain white as requested */
-.indexCell.transposed.merged {
-  background-color: #ffffff !important;
-}
-
-/* Existing Utility Classes */
 .focus { font-weight: bold; }
 .hidden { display: none; }
 .hover { background-color: #ffffbb; }
-.nonNumeric { text-align: left; }
-.numeric { text-align: right; }
 .negative { color: red; }
 .estimate { color: darkgray !important; }
 .subtotal { font-style: italic; font-weight: bold; background: #d3d3d3; }
 .total { border-top: 2px solid #000000 !important; font-weight: bold !important; }
-.total.transposed { border-top: 0px !important; background: #d3d3d3; }
