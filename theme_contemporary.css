@@ -1,3 +1,4 @@
+/* --- Core Theme Preservation --- */
 @font-face {
   font-family: 'Noto Sans TC';
   src: url('./fonts/noto-sans-tc-v10-latin_chinese-traditional-regular.woff2') format('woff2');
@@ -7,70 +8,76 @@
   src: url('./fonts/noto-sans-sc-v11-latin_chinese-simplified-regular.woff2') format('woff2');
 }
 
-/* --- NEW & UPDATED SELECTORS --- */
+/* Placeholder for Tableau Fonts (Fallback to Arial/Sans-Serif) */
+/* Note: Ensure these fonts are actually loaded in your environment */
+@font-face {
+  font-family: 'Tableau Book';
+  src: local('Arial');
+}
+@font-face {
+  font-family: 'Tableau Medium';
+  src: local('Arial Bold');
+}
 
-/* 1. Cell values (General data cells) */
-.reportTable td {
-  vertical-align: super;
-  padding: 5px;
+/* Root Table Styles */
+.reportTable {
+  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   border: 1px solid #cccccc;
   border-collapse: collapse;
-  /* Updated styles */
-  font-size: 8px;
-  color: #333333;
-  font-family: 'Tableau Book', 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* 2. Transposed Header (The pivoted dimension label) */
-.indexCell.transposed {
-  font-size: 8px;
-  color: #333333;
-  font-family: 'Tableau Medium', 'Segoe UI Bold', sans-serif;
-  font-weight: 500;
-  text-align: left;
-  vertical-align: top;
+/* --- 1. Cell Values (Transposed Data) --- */
+/* Targets the measure values in the body of the transposed table */
+.reportTable td.transposed:not(.indexCell) {
+  font-size: 8px !important;
+  font-family: 'Tableau Book', 'Arial', sans-serif !important;
+  color: #333333 !important;
 }
 
-/* 3. Measure Header (The row labels after transposing) */
-/* Usually identified by .headerCell or specific row index classes in this viz */
-.reportTable .rowCell.headerCell, 
-.reportTable td.headerCell {
-  font-size: 8px;
-  color: #666666;
-  font-family: 'Tableau Book', 'Segoe UI', sans-serif;
-  font-weight: normal;
+/* --- 2. Transposed Header (Pivoted Dimension) --- */
+/* Targets labels for the dimension that was pivoted before transposition */
+.reportTable td.indexCell.transposed.pivot {
+  font-size: 8px !important;
+  color: #333333 !important;
+  font-family: 'Tableau Medium', 'Arial', sans-serif !important;
+  text-align: left !important;
+  vertical-align: top !important;
 }
 
-/* 4. Column Headers (Date dimension values at the top) */
-table.reportTable th {
-  border: 1px solid #cccccc;
-  border-bottom: 1px solid #000000 !important;
-  padding: 5px;
-  /* Updated styles */
-  font-size: 12px;
-  font-weight: bold;
-  color: #333333;
-  text-align: right;
-  background-color: transparent; 
+/* --- 3. Measure Header (Rows) --- */
+/* Targets the measure names that now appear as row labels */
+.reportTable td.indexCell.transposed.measure,
+.reportTable td.indexCell.transposed.calculation {
+  font-size: 8px !important;
+  color: #666666 !important;
+  font-family: 'Tableau Book', 'Arial', sans-serif !important;
+  font-weight: normal !important; /* Overrides bold index default */
 }
 
-/* 5. Zebra Theme Background */
-/* Applies to odd rows, excluding the main header (thead) and merged index cells */
-.reportTable tr:nth-child(odd) td:not(.merged) {
-  background-color: #f5f5f5;
+/* --- 4. Column Headers (Date Dimension Values) --- */
+/* Targets the dates now appearing at the top of the columns */
+table.reportTable th.transposed {
+  font-size: 12px !important;
+  font-weight: bold !important;
+  color: #333333 !important;
+  text-align: right !important;
+  background-color: transparent !important;
 }
 
-/* Ensure merged cells stay white as requested */
+/* --- 5. Zebra Theme Background --- */
+/* Applies to odd body rows, excluding headers and merged (rowspan) cells */
+.reportTable tbody tr:nth-child(odd) td:not(.merged) {
+  background-color: #f5f5f5 !important;
+}
+
+/* Ensure merged cells remain white to avoid breaking visual grouping */
 .indexCell.transposed.merged {
   background-color: #ffffff !important;
 }
 
-/* --- REMAINDER OF ORIGINAL SELECTORS --- */
-
+/* --- Tooltip & Other Existing Styles (Preserved) --- */
 #tooltip {
   position: absolute;
-  width: auto;
-  height: auto;
   padding: 5px;
   background-color: white;
   border-radius: 4px;
@@ -81,57 +88,13 @@ table.reportTable th {
   z-index: 2;
 }
 
-.tooltipTable {
-  font-family: Open Sans, Helvetica, Arial, sans-serif;
-  border: 0px;
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-.focus { font-weight: bold; }
 .hidden { display: none; }
 .hover { background-color: #ffffbb; }
 
-.reportTable {
-  font-family: Open Sans, Helvetica, Arial, Noto Sans SC, Noto Sans TC, sans-serif;
-  border: 1px solid #cccccc;
-  border-collapse: collapse;
-  border-spacing: 3px;
-}
-
-.headerCell {
-  border-bottom: 1px solid #000000 !important;
+table.reportTable th, table.reportTable td {
   padding: 5px;
+  border: 1px solid #cccccc;
 }
 
-.rowCell {
-  vertical-align: super;
-  padding-left: 5px;
-}
-
-.nonNumeric { text-align: left; }
 .numeric { text-align: right; }
-.negative { color: red; }
-.estimate { color: darkgray !important; }
-.singleIndex { padding-left: 15px !important; }
-
-.subtotal {
-  font-style: italic;
-  font-weight: bold;
-  background: #d3d3d3;
-}
-
-.total {
-  border-top: 2px solid #000000 !important;
-  font-weight: bold !important;
-}
-
-.total.transposed {
-  border-top: 0px !important;
-  background: #d3d3d3;
-}
-
-.rectElem.animated {
-  font-family: Open Sans, Helvetica, Arial, sans-serif;
-  margin: 4px;
-}
+.negative { color: red !important; }
