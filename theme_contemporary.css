@@ -1,4 +1,3 @@
-/* --- Global Font Definitions & Existing Selectors preserved --- */
 @font-face {
   font-family: 'Noto Sans TC';
   src: url('./fonts/noto-sans-tc-v10-latin_chinese-traditional-regular.woff2') format('woff2');
@@ -8,60 +7,66 @@
   src: url('./fonts/noto-sans-sc-v11-latin_chinese-simplified-regular.woff2') format('woff2');
 }
 
-/* Base Table Container Scope */
-.report-table-container .reportTable {
-  font-family: 'Tableau Book', 'Open Sans', Helvetica, Arial, sans-serif;
-  border: 1px solid #cccccc;
-  border-collapse: collapse;
-}
+/* --- NEW & UPDATED SELECTORS --- */
 
 /* 1. Cell values (General data cells) */
-.report-table-container table.reportTable td {
-  font-size: 8px;
-  color: #333333;
-  font-family: 'Tableau Book', sans-serif;
+.reportTable td {
   vertical-align: super;
   padding: 5px;
   border: 1px solid #cccccc;
-}
-
-/* 2. Transposed Header (Pivoted Dimensions) */
-.report-table-container .indexCell.transposed {
+  border-collapse: collapse;
+  /* Updated styles */
   font-size: 8px;
   color: #333333;
-  font-family: 'Tableau Medium', sans-serif;
+  font-family: 'Tableau Book', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* 2. Transposed Header (The pivoted dimension label) */
+.indexCell.transposed {
+  font-size: 8px;
+  color: #333333;
+  font-family: 'Tableau Medium', 'Segoe UI Bold', sans-serif;
+  font-weight: 500;
   text-align: left;
   vertical-align: top;
 }
 
-/* 3. Measure Header (Headers after transposition) */
-.report-table-container table.reportTable th {
+/* 3. Measure Header (The row labels after transposing) */
+/* Usually identified by .headerCell or specific row index classes in this viz */
+.reportTable .rowCell.headerCell, 
+.reportTable td.headerCell {
   font-size: 8px;
   color: #666666;
-  font-family: 'Tableau Book', sans-serif;
+  font-family: 'Tableau Book', 'Segoe UI', sans-serif;
   font-weight: normal;
+}
+
+/* 4. Column Headers (Date dimension values at the top) */
+table.reportTable th {
   border: 1px solid #cccccc;
   border-bottom: 1px solid #000000 !important;
   padding: 5px;
-}
-
-/* 4. Column Header (Dimension values after transposition) */
-.report-table-container .headerCell {
+  /* Updated styles */
   font-size: 12px;
   font-weight: bold;
   color: #333333;
   text-align: right;
-  background-color: transparent; /* Or white */
-  border-bottom: 1px solid #000000 !important;
+  background-color: transparent; 
 }
 
 /* 5. Zebra Theme Background */
-/* Applies to odd rows, excluding the header (thead) and merged cells */
-.report-table-container table.reportTable tbody tr:nth-child(odd):not(.merged) {
+/* Applies to odd rows, excluding the main header (thead) and merged index cells */
+.reportTable tr:nth-child(odd) td:not(.merged) {
   background-color: #f5f5f5;
 }
 
-/* --- Preserved Existing Functional Selectors --- */
+/* Ensure merged cells stay white as requested */
+.indexCell.transposed.merged {
+  background-color: #ffffff !important;
+}
+
+/* --- REMAINDER OF ORIGINAL SELECTORS --- */
+
 #tooltip {
   position: absolute;
   width: auto;
@@ -76,10 +81,57 @@
   z-index: 2;
 }
 
+.tooltipTable {
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
+  border: 0px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.focus { font-weight: bold; }
+.hidden { display: none; }
+.hover { background-color: #ffffbb; }
+
+.reportTable {
+  font-family: Open Sans, Helvetica, Arial, Noto Sans SC, Noto Sans TC, sans-serif;
+  border: 1px solid #cccccc;
+  border-collapse: collapse;
+  border-spacing: 3px;
+}
+
+.headerCell {
+  border-bottom: 1px solid #000000 !important;
+  padding: 5px;
+}
+
+.rowCell {
+  vertical-align: super;
+  padding-left: 5px;
+}
+
+.nonNumeric { text-align: left; }
+.numeric { text-align: right; }
 .negative { color: red; }
 .estimate { color: darkgray !important; }
-.numeric { text-align: right; }
-.nonNumeric { text-align: left; }
-.subtotal { font-style: italic; font-weight: bold; background: #d3d3d3; }
-.total { border-top: 2px solid #000000 !important; font-weight: bold !important; }
-.hidden { display: none; }
+.singleIndex { padding-left: 15px !important; }
+
+.subtotal {
+  font-style: italic;
+  font-weight: bold;
+  background: #d3d3d3;
+}
+
+.total {
+  border-top: 2px solid #000000 !important;
+  font-weight: bold !important;
+}
+
+.total.transposed {
+  border-top: 0px !important;
+  background: #d3d3d3;
+}
+
+.rectElem.animated {
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
+  margin: 4px;
+}
